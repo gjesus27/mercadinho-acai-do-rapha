@@ -1,0 +1,105 @@
+/* style.css - visual inspirado no iFood (tons vermelhos) */
+:root{
+  --red: #d62828;
+  --red-dark: #b51f1f;
+  --bg: #fff5f5;
+  --card: #ffffff;
+  --text: #222;
+}
+
+*{box-sizing:border-box;font-family: 'Poppins', sans-serif;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* header comum */
+.header{
+  background:var(--red);
+  color:white;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.header h1{font-size:18px;margin:0;}
+.header img.logo{height:34px;border-radius:6px;}
+
+/* container */
+.container{padding:18px;max-width:1100px;margin:0 auto;}
+
+/* Funcionários (index) */
+.funcionarios{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  margin-top:12px;
+}
+.card{
+  background:var(--card);
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  cursor:pointer;
+  transition:transform .12s;
+}
+.card:hover{transform:translateY(-4px);}
+.foto{width:84px;height:84px;border-radius:50%;object-fit:cover;margin:0 auto 8px;}
+
+/* senha area */
+.senha-area{margin-top:18px;text-align:center;}
+.senha-area input{
+  width:160px;padding:10px;border-radius:10px;border:2px solid var(--red);font-size:18px;text-align:center;
+}
+.senha-area button{
+  margin-left:10px;padding:10px 14px;border-radius:10px;border:0;background:var(--red);color:#fff;font-weight:700;cursor:pointer;
+}
+
+/* Loja layout */
+.row{display:flex;gap:16px;align-items:flex-start;}
+.col{flex:1;}
+.produtos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:14px;
+}
+.produto{
+  background:var(--card);
+  border-radius:12px;padding:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
+  display:flex;flex-direction:column;gap:8px;
+}
+.produto img{height:110px;object-fit:cover;border-radius:8px;}
+.produto .nome{font-weight:700;}
+.produto .preco{font-size:16px;color:var(--red);font-weight:700;}
+.produto .actions{margin-top:auto;display:flex;gap:8px;align-items:center;}
+.btn{
+  background:var(--red);color:#fff;padding:8px 10px;border-radius:10px;border:0;font-weight:700;cursor:pointer;
+}
+.btn-ghost{background:transparent;border:2px solid var(--red);color:var(--red);}
+
+/* Carrinho */
+.carrinho{
+  background: #fff;border-radius:12px;padding:12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);
+  max-height:600px;overflow:auto;
+}
+.item-cart{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid #f1f1f1;}
+.item-cart:last-child{border-bottom:0;}
+.total{font-size:18px;font-weight:800;margin-top:12px;color:var(--red);}
+
+/* Pagamento */
+.pagamento{margin-top:16px;text-align:center;}
+#qr-pix{max-width:220px;border-radius:8px;}
+
+/* Admin */
+.admin-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+.input,textarea,select{padding:8px;border-radius:8px;border:1px solid #e6e6e6;width:100%}
+.table{width:100%;border-collapse:collapse;margin-top:12px;}
+.table th,.table td{padding:10px;border-bottom:1px solid #eee;text-align:left;}
+.small{font-size:13px;color:#666;}
+.filter-row{display:flex;gap:8px;align-items:center;}

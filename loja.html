@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Loja - Mercadinho</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <img src="https://i.ibb.co/m5FcBTd6/MARIMAR-LOGO.png" class="logo" alt="logo">
+    <h1>Mercadinho Mari Mar</h1>
+    <div style="margin-left:auto;color:#fff;font-weight:700;padding-right:12px" id="userLabel"></div>
+  </header>
+
+  <div class="container" id="page-loja">
+    <div class="row">
+      <div class="col">
+        <h3>Produtos</h3>
+        <div class="produtos-grid" id="produtosGrid">
+          <!-- cards -->
+        </div>
+      </div>
+
+      <div style="width:320px">
+        <div class="carrinho">
+          <h3>Carrinho</h3>
+          <div id="cartItems"></div>
+          <div class="total">Total: R$ <span id="cartTotal">0.00</span></div>
+
+          <div class="pagamento" id="pagamentoArea" style="display:none;">
+            <p>Use o Pix da Mari Mar para pagar:</p>
+            <img id="qr-pix" src="pix-fixo.png" alt="QR Pix">
+            <div style="margin-top:10px">
+              <button class="btn" id="confirmarBtn">Confirmar Pagamento</button>
+              <button id="pagarDepoisBtn" class="btn">Pagar Depois</button>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;text-align:center;">
+            <button class="btn-ghost" id="logoutBtn">Sair</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

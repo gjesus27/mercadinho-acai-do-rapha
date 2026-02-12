@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Mercadinho</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <img src="https://i.ibb.co/m5FcBTd6/MARIMAR-LOGO.png" class="logo" alt="logo">
+    <h1>Painel Admin</h1>
+  </header>
+
+  <div class="container" id="page-admin">
+    <div class="admin-actions">
+      <div style="flex:1;min-width:260px">
+        <h3>Adicionar/Editar Produto</h3>
+        <input id="prodNome" class="input" placeholder="Nome do produto">
+        <input id="prodPreco" class="input" placeholder="Preço (ex: 5.50)" type="number" step="0.01">
+        <input id="prodImg" class="input" placeholder="URL da imagem">
+        <button id="btnAddProd" class="btn" style="margin-top:8px">Salvar produto</button>
+      </div>
+
+      <div style="flex:1;min-width:260px">
+        <h3>Configurações</h3>
+        <label class="small">URL do QR Pix (fixo)</label>
+        <input id="pixUrl" class="input" placeholder="https://.../pix.png">
+        <button id="btnSavePix" class="btn" style="margin-top:8px">Salvar QR</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>Produtos cadastrados</h3>
+    <table class="table" id="prodTable">
+      <thead><tr><th>Nome</th><th>Preço</th><th>Imagem</th><th>Ações</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <hr>
+    <h3>Relatório de vendas</h3>
+    <div class="filter-row">
+      <input type="date" id="dateFrom" class="input" style="max-width:200px">
+      <input type="date" id="dateTo" class="input" style="max-width:200px">
+      <button id="btnFilter" class="btn">Filtrar</button>
+      <button id="btnExport" class="btn-ghost">Exportar CSV</button>
+    </div>
+
+    <table class="table" id="salesTable">
+      <thead><tr><th>Data</th><th>Funcionário</th><th>Itens</th><th>Valor</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
