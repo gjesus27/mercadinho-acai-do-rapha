@@ -3,29 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mercadinho Mari Mar</title>
+  <title>Mercadinho do Rapha</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <header class="header">
-    <img src="https://i.ibb.co/m5FcBTd6/MARIMAR-LOGO.png" class="logo" alt="logo">
-    <h1>Mercadinho Mari Mar</h1>
+    <img src="image/logo/logoaçai.svg" class="logo" alt="logo">
+    <h1>Mercadinho do Rapha</h1>
   </header>
 
-  <div class="container" id="page-index">
-    <h2>Quem vai comprar?</h2>
-    <div class="funcionarios" id="listaFuncionarios">
-      <!-- cards carregados por script.js -->
-    </div>
+  <div class="container">
 
-    <div class="senha-area" id="senhaArea" style="display:none;">
-      <h3 id="nomeSelecionado"></h3>
-      <input type="password" id="senhaInput" maxlength="4" inputmode="numeric" placeholder="••••">
-      <button id="btnEntrar">Entrar</button>
-    </div>
+  <h2>Quem vai comprar?</h2>
+
+  <input 
+    type="text"
+    id="buscarFuncionario"
+    placeholder="Buscar funcionário..."
+    class="input"
+  >
+
+  <div class="funcionarios" id="listaFuncionarios"></div>
+
+<!-- LOADING LOGIN -->
+<div id="loadingLogin" class="loadingLogin">
+
+  <div class="loadingCard">
+
+    <div class="spinner"></div>
+
+    <h2 id="loadingTexto">Entrando...</h2>
+
   </div>
+
+</div>
+
+
+<!-- ERRO SENHA -->
+<div id="erroSenha" class="erroSenha">
+
+  <div class="erroCard">
+
+    <h2>Senha incorreta 😢</h2>
+
+    <p>Tente novamente</p>
+
+    <button id="fecharErro" class="btn">
+      OK
+    </button>
+
+  </div>
+
+</div>
+
 
   <script type="module" src="script.js"></script>
 </body>
