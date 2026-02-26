@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+  <button id="btnAdminToggle" class="btnAdmin">☰</button>
+  <h1>Dashboard</h1>
+</header>
+
+<div id="menuAdmin" class="sidebar">
+  <h3>Painel Administrador</h3>
+
+  <button onclick="window.location.href='dashboard.html'">Dashboard</button>
+  <button onclick="window.location.href='produtos.html'">Produtos</button>
+  <button onclick="window.location.href='funcionarios.html'">Funcionários</button>
+  <button onclick="window.location.href='relatorios.html'">Relatórios</button>
+</div>
+
+<div class="conteudoAdmin">
+  <h2>📊 Dados em tempo real</h2>
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
