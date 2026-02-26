@@ -1,6 +1,7 @@
 import { db } from "./firebase-config.js";
 import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
+// ================= FUNÇÕES GERAIS =================
 function getFuncionario() {
   return JSON.parse(localStorage.getItem("funcionario"));
 }
@@ -15,9 +16,23 @@ function verificarAdmin() {
 
 const funcionario = verificarAdmin();
 
-// MENU LATERAL
+// ================= HEADER =================
+const userNomeHeader = document.getElementById("userNomeHeader");
+const userFotoHeader = document.getElementById("userFotoHeader");
+const logoutBtn = document.getElementById("logoutBtn");
+
+if(userNomeHeader) userNomeHeader.textContent = funcionario.nome;
+if(userFotoHeader) userFotoHeader.src = funcionario.foto || "image/user.png";
+
+logoutBtn?.addEventListener("click", () => {
+  localStorage.removeItem("funcionario");
+  window.location.href = "index.html";
+});
+
+// ================= MENU LATERAL =================
 const btnAdminToggle = document.getElementById("btnAdminToggle");
 const menuAdmin = document.getElementById("menuAdmin");
+
 btnAdminToggle?.addEventListener("click", () => menuAdmin?.classList.toggle("ativo"));
 document.addEventListener("click", e => {
   if(menuAdmin?.classList.contains("ativo") &&
@@ -27,7 +42,12 @@ document.addEventListener("click", e => {
      }
 });
 
-// ELEMENTOS DASHBOARD
+// Botão voltar para a loja
+menuAdmin?.querySelector('[data-pagina="loja.html"]')?.addEventListener("click", () => {
+  window.location.href = "loja.html";
+});
+
+// ================= ELEMENTOS DASHBOARD =================
 const totalVendidoEl = document.getElementById("totalVendido");
 const totalVendasEl = document.getElementById("totalVendas");
 const ticketMedioEl = document.getElementById("ticketMedio");
@@ -44,14 +64,16 @@ const filtroPeriodo = document.getElementById("filtroPeriodo");
 let chartVendas, chartProdutos, chartCashback;
 let todasVendas = [];
 
-// FUNÇÃO AUXILIAR PARA FILTRAR VENDAS
+// ================= FILTRO =================
 function filtrarVendas() {
   let vendasFiltradas = [...todasVendas];
 
+  // Filtra por funcionário
   if(filtroFuncionario?.value && filtroFuncionario.value !== "todos") {
     vendasFiltradas = vendasFiltradas.filter(v => v.funcionario === filtroFuncionario.value);
   }
 
+  // Filtra por período
   const agora = new Date();
   if(filtroPeriodo?.value) {
     if(filtroPeriodo.value === "hoje") {
@@ -68,10 +90,11 @@ function filtrarVendas() {
   atualizarDashboard(vendasFiltradas);
 }
 
-// SNAPSHOT VENDAS
+// ================= SNAPSHOT VENDAS =================
 onSnapshot(collection(db, "venda"), snap => {
   todasVendas = snap.docs.map(doc => doc.data());
 
+  // Popula filtro de funcionários
   if(filtroFuncionario) {
     const funcionarios = Array.from(new Set(todasVendas.map(v => v.funcionario)));
     filtroFuncionario.innerHTML = '<option value="todos">Todos</option>' + 
@@ -81,7 +104,7 @@ onSnapshot(collection(db, "venda"), snap => {
   filtrarVendas();
 });
 
-// ATUALIZA DASHBOARD COM VENDAS FILTRADAS
+// ================= FUNÇÃO PARA ATUALIZAR DASHBOARD =================
 function atualizarDashboard(vendas) {
   let total = 0, qtd = 0, totalReceber = 0;
   const funcionariosTotais = {};
@@ -96,13 +119,14 @@ function atualizarDashboard(vendas) {
 
     funcionariosTotais[v.funcionario] = (funcionariosTotais[v.funcionario] || 0) + v.total;
 
-    v.produto?.forEach(p=>{
+    v.produto?.forEach(p => {
       produtosTotais[p.nome] = (produtosTotais[p.nome] || 0) + (p.qntd || 1);
     });
 
     if(v.cashback) cashbackTotais[v.funcionario] = (cashbackTotais[v.funcionario]||0) + v.cashback;
   });
 
+  // Atualiza cards
   totalVendidoEl && (totalVendidoEl.textContent = `R$ ${total.toFixed(2)}`);
   totalVendasEl && (totalVendasEl.textContent = qtd);
   ticketMedioEl && (ticketMedioEl.textContent = `R$ ${qtd ? (total/qtd).toFixed(2) : "0.00"}`);
@@ -134,43 +158,45 @@ function atualizarDashboard(vendas) {
     });
   }
 
-  // Gráficos
+  // Gráfico Vendas
   if(vendasChartEl) {
     const vendasPorDia = {};
     vendas.forEach(v=> vendasPorDia[v.data] = (vendasPorDia[v.data]||0)+v.total );
-    const labelsVendas = Object.keys(vendasPorDia);
-    const dataVendas = Object.values(vendasPorDia);
+    const labels = Object.keys(vendasPorDia);
+    const data = Object.values(vendasPorDia);
     if(chartVendas) chartVendas.destroy();
-    chartVendas = new Chart(vendasChartEl.getContext("2d"),{
+    chartVendas = new Chart(vendasChartEl.getContext("2d"), {
       type:'line',
-      data:{ labels:labelsVendas, datasets:[{ label:"Vendas por Dia", data:dataVendas, borderColor:"#d62828", backgroundColor:"rgba(214,40,40,0.2)", tension:0.3 }]},
+      data:{ labels, datasets:[{ label:"Vendas por Dia", data, borderColor:"#d62828", backgroundColor:"rgba(214,40,40,0.2)", tension:0.3 }]},
       options:{ responsive:true, plugins:{legend:{display:true}}}
     });
   }
 
+  // Gráfico Produtos
   if(produtosChartEl) {
-    const labelsProdutos = Object.keys(produtosTotais);
-    const dataProdutos = Object.values(produtosTotais);
+    const labels = Object.keys(produtosTotais);
+    const data = Object.values(produtosTotais);
     if(chartProdutos) chartProdutos.destroy();
-    chartProdutos = new Chart(produtosChartEl.getContext("2d"),{
+    chartProdutos = new Chart(produtosChartEl.getContext("2d"), {
       type:'bar',
-      data:{ labels:labelsProdutos, datasets:[{ label:"Qtd Vendida", data:dataProdutos, backgroundColor:"#1f1f1f" }] },
+      data:{ labels, datasets:[{ label:"Qtd Vendida", data, backgroundColor:"#1f1f1f" }] },
       options:{ responsive:true, plugins:{legend:{display:false}} }
     });
   }
 
+  // Gráfico Cashback
   if(cashbackChartEl) {
-    const labelsCashback = Object.keys(cashbackTotais);
-    const dataCashback = Object.values(cashbackTotais);
+    const labels = Object.keys(cashbackTotais);
+    const data = Object.values(cashbackTotais);
     if(chartCashback) chartCashback.destroy();
-    chartCashback = new Chart(cashbackChartEl.getContext("2d"),{
+    chartCashback = new Chart(cashbackChartEl.getContext("2d"), {
       type:'bar',
-      data:{ labels:labelsCashback, datasets:[{ label:"Cashback disponível", data:dataCashback, backgroundColor:"#ff9800" }] },
+      data:{ labels, datasets:[{ label:"Cashback disponível", data, backgroundColor:"#ff9800" }] },
       options:{ responsive:true, plugins:{legend:{display:false}} }
     });
   }
 }
 
-// EVENTOS FILTRO
+// ================= EVENTOS FILTROS =================
 filtroFuncionario?.addEventListener("change", filtrarVendas);
 filtroPeriodo?.addEventListener("change", filtrarVendas);
