@@ -422,3 +422,29 @@ body{
   margin-left:260px;
   transition:0.3s;
 }
+
+.cardAdmin{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  margin-bottom:15px;
+  text-align:center;
+}
+
+.dashboardCards .cardAdmin p{
+  font-size:18px;
+  font-weight:700;
+  color:var(--red);
+}
+
+.row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.col{
+  flex:1;
+  min-width:200px;
+}

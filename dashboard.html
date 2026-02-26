@@ -1,31 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - Mercadinho do Rapha</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
 
-<header class="header">
-  <button id="btnAdminToggle" class="btnAdmin">☰</button>
-  <h1>Dashboard</h1>
-</header>
+  <!-- HEADER GLOBAL -->
+  <header class="header">
+    <img src="image/logo/logoaçai.svg" class="logo" alt="logo">
+    <h1>Mercadinho do Rapha</h1>
+    <button id="btnAdminToggle" class="btnAdmin">☰</button>
+  </header>
 
-<div id="menuAdmin" class="sidebar">
-  <h3>Painel Administrador</h3>
+  <!-- MENU LATERAL ADMIN -->
+  <div class="sidebar" id="menuAdmin">
+    <h3>Menu Admin</h3>
+    <button class="menuBtn ativo" data-pagina="dashboard.html">Dashboard</button>
+    <button class="menuBtn" data-pagina="produtos.html">Produtos</button>
+    <button class="menuBtn" data-pagina="funcionarios.html">Funcionários</button>
+    <button class="menuBtn" data-pagina="relatorios.html">Relatórios</button>
+  </div>
 
-  <button onclick="window.location.href='dashboard.html'">Dashboard</button>
-  <button onclick="window.location.href='produtos.html'">Produtos</button>
-  <button onclick="window.location.href='funcionarios.html'">Funcionários</button>
-  <button onclick="window.location.href='relatorios.html'">Relatórios</button>
-</div>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="conteudoAdmin">
 
-<div class="conteudoAdmin">
-  <h2>📊 Dados em tempo real</h2>
-</div>
+    <h1>📊 Dashboard</h1>
 
-<script type="module" src="script.js"></script>
+    <!-- FILTROS -->
+    <div class="row" style="margin-bottom:20px; gap:10px;">
+      <select id="filtroFuncionario" class="input">
+        <option value="todos">Todos Funcionários</option>
+      </select>
+      <select id="filtroPeriodo" class="input">
+        <option value="todos">Todos os Períodos</option>
+        <option value="hoje">Hoje</option>
+        <option value="7dias">Últimos 7 dias</option>
+        <option value="30dias">Últimos 30 dias</option>
+      </select>
+    </div>
+
+    <!-- CARDS RESUMO -->
+    <div class="dashboardCards row">
+      <div class="cardAdmin col">
+        <h3>Total Vendido</h3>
+        <p id="totalVendido">R$ 0,00</p>
+      </div>
+      <div class="cardAdmin col">
+        <h3>Total de Vendas</h3>
+        <p id="totalVendas">0</p>
+      </div>
+      <div class="cardAdmin col">
+        <h3>Ticket Médio</h3>
+        <p id="ticketMedio">R$ 0,00</p>
+      </div>
+      <div class="cardAdmin col">
+        <h3>Top Funcionário</h3>
+        <p id="topFuncionario">-</p>
+      </div>
+      <div class="cardAdmin col">
+        <h3>Total a Receber</h3>
+        <p id="totalReceber">R$ 0,00</p>
+      </div>
+    </div>
+
+    <!-- GRÁFICOS -->
+    <div class="row">
+      <div class="col">
+        <canvas id="graficoVendas"></canvas>
+      </div>
+      <div class="col">
+        <canvas id="graficoProdutos"></canvas>
+      </div>
+      <div class="col">
+        <canvas id="graficoCashback"></canvas>
+      </div>
+    </div>
+
+    <!-- RANKINGS -->
+    <h2>Ranking Funcionários</h2>
+    <div id="rankingFuncionarios" class="row"></div>
+
+    <h2>Produtos Mais Vendidos</h2>
+    <div id="rankingProdutos" class="row"></div>
+
+  </div>
+
+  <script type="module" src="dashboard.js"></script>
 </body>
 </html>
