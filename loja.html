@@ -1,57 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Loja</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mercadinho do Rapha</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- MENU ADMIN -->
-<div id="menuAdmin" class="menu-admin">
-
-  <h3>Admin</h3>
-
-  <ul>
-    <li>Dashboard</li>
-    <li>Produtos</li>
-    <li>Funcionários</li>
-    <li>Relatórios</li>
-  </ul>
-
-</div>
-
 <header class="header">
 
-  <img src="image/logo/logoaçai.svg" class="logo">
+  <button id="btnAdminToggle" class="btnAdmin">☰</button>
 
+  <img src="image/logo/logoaçai.svg" class="logo">
   <h1>Mercadinho do Rapha</h1>
 
   <div class="userBox">
     <img id="userFoto">
     <span id="userNome"></span>
 
-      <button id="logoutBtn" class="btnLogout">
-    <img src="image/icone/Login de usuário.png" class="icone">
-  </button>
+    <button id="logoutBtn" class="btnLogout">
+      🚪
+    </button>
   </div>
 
 </header>
+
+
+<div id="menuAdmin" class="sidebar">
+  <h3>Painel Administrador</h3>
+
+  <button onclick="window.location.href='dashboard.html'">Dashboard</button>
+  <button onclick="window.location.href='produtos.html'">Produtos</button>
+  <button onclick="window.location.href='funcionarios.html'">Funcionários</button>
+  <button onclick="window.location.href='relatorios.html'">Relatórios</button>
+</div>
+
+<div id="dashboard" class="secaoAdmin">
+  <h2>📊 Dashboard</h2>
+</div>
+
+<div id="produtosAdmin" class="secaoAdmin">
+  <h2>📦 Gestão de Produtos</h2>
+</div>
+
+<div id="funcionarios" class="secaoAdmin">
+  <h2>👥 Funcionários</h2>
+</div>
+
+<div id="relatorios" class="secaoAdmin">
+  <h2>📈 Relatórios</h2>
+</div>
+
 
 <div class="container" id="page-loja">
 
   <div class="row">
 
     <div class="col">
-      <h3>Produtos</h3>
+      <h3>Produtos Disponíveis</h3>
       <div class="produtos-grid" id="produtosGrid"></div>
     </div>
 
     <div style="width:320px">
-
       <div class="carrinho">
+
         <h3>Carrinho</h3>
 
         <div id="cartItems"></div>
@@ -62,10 +76,6 @@
 
         <div class="pagamento" id="pagamentoArea" style="display:none;">
 
-          <p>Pague com Pix:</p>
-
-          <img id="qr-pix" src="pix-fixo.png">
-
           <button class="btn" id="confirmarBtn">
             Confirmar Pagamento
           </button>
@@ -74,9 +84,13 @@
             Pagar Depois
           </button>
 
-        </div>
-      </div>
+          <button class="btn" id="limparCarrinhoBtn">
+            Limpar Carrinho
+          </button>
 
+        </div>
+
+      </div>
     </div>
 
   </div>
@@ -84,5 +98,6 @@
 </div>
 
 <script type="module" src="script.js"></script>
+
 </body>
 </html>

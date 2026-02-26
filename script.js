@@ -1,204 +1,160 @@
 import { db } from "./firebase-config.js";
-
 import {
   collection,
-  getDocs,
-  addDoc
+  addDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  updateDoc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-/* ============================================================
-LOGIN
-============================================================ */
+const paginaAtual = window.location.pathname.split("/").pop();
 
-if (
-  window.location.pathname.endsWith("index.html") ||
-  window.location.pathname.endsWith("/")
-) {
+/* ================= FUNÇÕES GERAIS ================= */
 
+function getFuncionario() {
+  return JSON.parse(localStorage.getItem("funcionario"));
+}
+
+function verificarAdmin() {
+  const funcionario = getFuncionario();
+  if (!funcionario || funcionario.nivel !== "admin") {
+    window.location.href = "index.html";
+  }
+  return funcionario;
+}
+
+/* ================= MENU GLOBAL ================= */
+
+const btnAdminToggle = document.getElementById("btnAdminToggle");
+const menuAdmin = document.getElementById("menuAdmin");
+
+if (btnAdminToggle && menuAdmin) {
+  btnAdminToggle.addEventListener("click", () => {
+    menuAdmin.classList.toggle("ativo");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (
+      menuAdmin.classList.contains("ativo") &&
+      !menuAdmin.contains(e.target) &&
+      !btnAdminToggle.contains(e.target)
+    ) {
+      menuAdmin.classList.remove("ativo");
+    }
+  });
+}
+
+/* ================= INDEX.HTML – FUNCIONÁRIOS ================= */
+
+if (paginaAtual === "index.html") {
   const lista = document.getElementById("listaFuncionarios");
-  const buscarInput = document.getElementById("buscarFuncionario");
-
-  const loading = document.getElementById("loadingLogin");
-  const loadingTexto = document.getElementById("loadingTexto");
-
+  const buscarFuncionario = document.getElementById("buscarFuncionario");
+  const loadingLogin = document.getElementById("loadingLogin");
   const erroSenha = document.getElementById("erroSenha");
   const fecharErro = document.getElementById("fecharErro");
 
+  let funcionarios = [];
   let funcionarioSelecionado = null;
 
-  async function carregarFuncionarios(filtro = "") {
+  // Fecha mensagem de erro
+  fecharErro?.addEventListener("click", () => erroSenha.classList.remove("ativo"));
 
-    const snap = await getDocs(collection(db, "funcionarios"));
+  // Busca por nome
+  buscarFuncionario?.addEventListener("input", (e) => {
+    const termo = e.target.value.toLowerCase();
+    renderFuncionarios(funcionarios.filter(f => f.nome.toLowerCase().includes(termo)));
+  });
+
+  onSnapshot(collection(db, "funcionarios"), snap => {
+    funcionarios = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderFuncionarios(funcionarios);
+  });
+
+  function renderFuncionarios(listaFuncionarios) {
     lista.innerHTML = "";
 
-    snap.forEach(doc => {
-
-      const f = doc.data();
-      if (!f.nome) return;
-
-      if (!f.nome.toLowerCase().includes(filtro.toLowerCase())) return;
-
+    listaFuncionarios.forEach(f => {
       const card = document.createElement("div");
       card.className = "cardFuncionario";
-
       card.innerHTML = `
-        <img src="${f.foto || "image/user.png"}">
+        <img src="${f.foto || 'image/user.png'}" alt="${f.nome}">
         <strong>${f.nome}</strong>
-        <span>${f.cargo || ""}</span>
-
-        <div class="loginInterno">
+        <span>${f.cargo || ''}</span>
+        <div class="loginInterno" style="display:none;">
           <input type="password" placeholder="Senha" maxlength="4">
-
-          <div style="display:flex; gap:6px;">
-            <button class="btn btnEntrar">Entrar</button>
-            <button class="btn btnCancelar">Cancelar</button>
-          </div>
-
+          <button class="btn btnEntrar">Entrar</button>
         </div>
       `;
 
       const areaLogin = card.querySelector(".loginInterno");
       const inputSenha = areaLogin.querySelector("input");
       const btnEntrar = areaLogin.querySelector(".btnEntrar");
-      const btnCancelar = areaLogin.querySelector(".btnCancelar");
 
-      /* ABRIR LOGIN */
-
-      card.onclick = () => {
-
-        document.querySelectorAll(".loginInterno")
-          .forEach(a => a.style.display = "none");
-
-        document.querySelectorAll(".cardFuncionario")
-          .forEach(c => c.classList.remove("ativo"));
-
-        card.classList.add("ativo");
+      // Mostra input de senha ao clicar no card
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".loginInterno").forEach(a => a.style.display = "none");
         areaLogin.style.display = "block";
-
-        inputSenha.value = "";
-        inputSenha.focus();
-
-        funcionarioSelecionado = { id: doc.id, ...f };
-      };
-
-      /* LOGIN */
-
-      function fazerLogin() {
-
-        if (!funcionarioSelecionado) return;
-
-        loadingTexto.innerText =
-          `Bem-vindo(a) ${funcionarioSelecionado.nome}`;
-
-        loading.classList.add("ativo");
-
-        setTimeout(() => {
-
-          if (inputSenha.value === funcionarioSelecionado.senha) {
-
-            localStorage.setItem(
-              "funcionario",
-              JSON.stringify(funcionarioSelecionado)
-            );
-
-            window.location.href = "loja.html";
-
-          } else {
-
-            loading.classList.remove("ativo");
-            erroSenha.classList.add("ativo");
-
-            inputSenha.value = "";
-            inputSenha.focus();
-          }
-
-        }, 1200);
-      }
-
-      btnEntrar.onclick = (e) => {
-        e.stopPropagation();
-        fazerLogin();
-      };
-
-      /* ENTER FAZ LOGIN */
-
-      inputSenha.addEventListener("keypress", e => {
-        if (e.key === "Enter") {
-          fazerLogin();
-        }
+        funcionarioSelecionado = f;
       });
 
-      /* CANCELAR */
-
-      btnCancelar.onclick = (e) => {
-
+      // Verifica senha
+      btnEntrar.addEventListener("click", (e) => {
         e.stopPropagation();
+        loadingLogin.classList.add("ativo");
 
-        areaLogin.style.display = "none";
-        card.classList.remove("ativo");
-        funcionarioSelecionado = null;
-      };
+        setTimeout(() => {
+          loadingLogin.classList.remove("ativo");
+
+          if (inputSenha.value === f.senha) {
+            localStorage.setItem("funcionario", JSON.stringify(funcionarioSelecionado));
+            window.location.href = "loja.html";
+          } else {
+            erroSenha.classList.add("ativo");
+          }
+        }, 500); // Simula carregamento
+      });
 
       lista.appendChild(card);
     });
   }
-
-  fecharErro.onclick = () => {
-    erroSenha.classList.remove("ativo");
-  };
-
-  buscarInput?.addEventListener("input", e => {
-    carregarFuncionarios(e.target.value);
-  });
-
-  carregarFuncionarios();
 }
 
+/* ================= LOJA ================= */
 
-/* ============================================================
-LOJA
-============================================================ */
+// TODO: Aqui você mantém todo o código da loja, dashboard, produtos, funcionários admin e relatórios exatamente igual
 
-if (window.location.pathname.endsWith("loja.html")) {
+/* ================= LOJA ================= */
 
-  const funcionario = JSON.parse(localStorage.getItem("funcionario"));
+if (paginaAtual === "loja.html") {
 
-  if (!funcionario) {
-    window.location.href = "index.html";
-  }
+  const funcionario = getFuncionario();
+  if (!funcionario) window.location.href = "index.html";
 
   document.getElementById("userNome").textContent = funcionario.nome;
   document.getElementById("userFoto").src =
     funcionario.foto || "image/user.png";
 
-  if (funcionario.nivel === "admin") {
-
-    const menuAdmin = document.getElementById("menuAdmin");
-
-    if (menuAdmin) menuAdmin.style.display = "block";
-
-    document.body.classList.add("adminAtivo");
-  }
-
   const grid = document.getElementById("produtosGrid");
   const cartItems = document.getElementById("cartItems");
   const cartTotal = document.getElementById("cartTotal");
-  const confirmarBtn = document.getElementById("confirmarBtn");
   const pagamentoArea = document.getElementById("pagamentoArea");
-  const logoutBtn = document.getElementById("logoutBtn");
+
+  const confirmarBtn = document.getElementById("confirmarBtn");
   const pagarDepoisBtn = document.getElementById("pagarDepoisBtn");
+  const limparCarrinhoBtn = document.getElementById("limparCarrinhoBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
 
   let carrinho = [];
 
-  async function carregarProdutos() {
-
-    const snap = await getDocs(collection(db, "produtos"));
+  onSnapshot(collection(db, "produtos"), (snap) => {
     grid.innerHTML = "";
 
-    snap.forEach(doc => {
-
-      const p = doc.data();
+    snap.forEach(docSnap => {
+      const p = docSnap.data();
       const preco = parseFloat(p.preco || 0);
+      const estoque = p.estoque || 0;
 
       const div = document.createElement("div");
       div.className = "produto";
@@ -207,12 +163,17 @@ if (window.location.pathname.endsWith("loja.html")) {
         <img src="${p.imagem || ""}">
         <p class="nome">${p.nome}</p>
         <p class="preco">R$ ${preco.toFixed(2)}</p>
-        <button class="btn">Adicionar</button>
+        <p>Estoque: ${estoque}</p>
+        <button ${estoque <= 0 ? "disabled" : ""}>
+          ${estoque <= 0 ? "Sem estoque" : "Adicionar"}
+        </button>
       `;
 
       div.querySelector("button").onclick = () => {
+        if (estoque <= 0) return;
 
         carrinho.push({
+          id: docSnap.id,
           nome: p.nome,
           preco
         });
@@ -222,7 +183,7 @@ if (window.location.pathname.endsWith("loja.html")) {
 
       grid.appendChild(div);
     });
-  }
+  });
 
   function atualizarCarrinho() {
 
@@ -234,13 +195,12 @@ if (window.location.pathname.endsWith("loja.html")) {
     `).join("");
 
     const total = carrinho.reduce((t, i) => t + i.preco, 0);
-
     cartTotal.textContent = total.toFixed(2);
-    pagamentoArea.style.display =
-      carrinho.length ? "block" : "none";
+
+    pagamentoArea.style.display = carrinho.length ? "block" : "none";
   }
 
-  async function registrarVenda(status) {
+  async function registrarVenda(status, formaPagamento) {
 
     if (!carrinho.length) return;
 
@@ -252,8 +212,19 @@ if (window.location.pathname.endsWith("loja.html")) {
       itens: carrinho,
       total,
       status,
+      formaPagamento,
       data: new Date().toISOString()
     });
+
+    for (let item of carrinho) {
+      const ref = doc(db, "produtos", item.id);
+      const snap = await getDoc(ref);
+      const estoqueAtual = snap.data().estoque || 0;
+
+      await updateDoc(ref, {
+        estoque: estoqueAtual - 1
+      });
+    }
 
     carrinho = [];
     atualizarCarrinho();
@@ -261,14 +232,129 @@ if (window.location.pathname.endsWith("loja.html")) {
     alert("Venda registrada com sucesso!");
   }
 
-  confirmarBtn.onclick = () => registrarVenda("pago");
-  pagarDepoisBtn.onclick = () => registrarVenda("pagar depois");
+  confirmarBtn?.addEventListener("click", () =>
+    registrarVenda("pago", "dinheiro")
+  );
 
-  logoutBtn.onclick = () => {
+  pagarDepoisBtn?.addEventListener("click", () =>
+    registrarVenda("pendente", "pagar_depois")
+  );
 
+  limparCarrinhoBtn?.addEventListener("click", () => {
+    carrinho = [];
+    atualizarCarrinho();
+  });
+
+  logoutBtn?.addEventListener("click", () => {
     localStorage.removeItem("funcionario");
     window.location.href = "index.html";
-  };
+  });
+}
 
-  carregarProdutos();
+/* ================= DASHBOARD ================= */
+
+if (paginaAtual === "dashboard.html") {
+
+  verificarAdmin();
+
+  const conteudo = document.querySelector(".conteudoAdmin");
+
+  onSnapshot(collection(db, "vendas"), (snap) => {
+
+    let total = 0;
+    let qtd = 0;
+    let funcionarios = {};
+
+    snap.forEach(docSnap => {
+      const v = docSnap.data();
+      total += v.total;
+      qtd++;
+
+      funcionarios[v.funcionario] =
+        (funcionarios[v.funcionario] || 0) + v.total;
+    });
+
+    const top = Object.entries(funcionarios)
+      .sort((a, b) => b[1] - a[1])[0];
+
+    conteudo.innerHTML = `
+      <h2>📊 Dados em tempo real</h2>
+      <p><strong>Total Vendido:</strong> R$ ${total.toFixed(2)}</p>
+      <p><strong>Total de Vendas:</strong> ${qtd}</p>
+      <p><strong>Ticket Médio:</strong> R$ ${qtd ? (total/qtd).toFixed(2) : "0.00"}</p>
+      <p><strong>Top Funcionário:</strong> ${top ? top[0] : "-"}</p>
+    `;
+  });
+}
+
+/* ================= PRODUTOS ADMIN ================= */
+
+if (paginaAtual === "produtos.html") {
+
+  verificarAdmin();
+
+  const conteudo = document.querySelector(".conteudoAdmin");
+
+  onSnapshot(collection(db, "produtos"), (snap) => {
+
+    let html = "<h2>📦 Produtos</h2>";
+
+    snap.forEach(docSnap => {
+      const p = docSnap.data();
+      html += `
+        <p>${p.nome} — R$ ${parseFloat(p.preco).toFixed(2)} — Estoque: ${p.estoque || 0}</p>
+      `;
+    });
+
+    conteudo.innerHTML = html;
+  });
+}
+
+/* ================= FUNCIONÁRIOS ADMIN ================= */
+
+if (paginaAtual === "funcionarios.html") {
+
+  verificarAdmin();
+
+  const conteudo = document.querySelector(".conteudoAdmin");
+
+  onSnapshot(collection(db, "funcionarios"), (snap) => {
+
+    let html = "<h2>👥 Funcionários</h2>";
+
+    snap.forEach(docSnap => {
+      const f = docSnap.data();
+      html += `
+        <p>${f.nome} — ${f.cargo || "-"} — ${f.nivel || "user"}</p>
+      `;
+    });
+
+    conteudo.innerHTML = html;
+  });
+}
+
+/* ================= RELATÓRIOS ================= */
+
+if (paginaAtual === "relatorios.html") {
+
+  verificarAdmin();
+
+  const conteudo = document.querySelector(".conteudoAdmin");
+
+  onSnapshot(collection(db, "vendas"), (snap) => {
+
+    let html = "<h2>📈 Relatórios</h2>";
+
+    snap.forEach(docSnap => {
+      const v = docSnap.data();
+      html += `
+        <p>${new Date(v.data).toLocaleDateString()} —
+        ${v.funcionario} —
+        R$ ${v.total.toFixed(2)} —
+        ${v.status}</p>
+      `;
+    });
+
+    conteudo.innerHTML = html;
+  });
 }

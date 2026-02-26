@@ -1,227 +1,62 @@
-/* style.css - visual inspirado no iFood (tons vermelhos) */
 :root{
-  --black: #000000;
-  --red-dark: #b51f1f;
-  --bg: #fff5f5;
-  --card: #ffffff;
-  --text: #222;
+  --black:#000;
+  --red:#d62828;
+  --red-dark:#b51f1f;
+  --bg:#fff5f5;
+  --card:#ffffff;
+  --text:#222;
 }
 
-*{box-sizing:border-box;font-family: 'Poppins', sans-serif;}
+*{
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
 }
 
-/* header comum */
+/* ================= HEADER ================= */
+
 .header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:70px;
   background:var(--black);
   color:white;
-  padding:14px 16px;
+  padding:0 20px;
   display:flex;
   align-items:center;
-  gap:12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-.header h1{font-size:18px;margin:0;}
-.header img.logo{height:34px;border-radius:6px;}
-
-/* container */
-.container{padding:18px;max-width:1100px;margin:0 auto;}
-
-/* Funcionários (index) */
-.funcionarios{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-  margin-top:12px;
-}
-.card{
-  background:var(--card);
-  border-radius:12px;
-  padding:12px;
-  text-align:center;
-  box-shadow:0 2px 8px rgba(0,0,0,0.06);
-  cursor:pointer;
-  transition:transform .12s;
-}
-.card:hover{transform:translateY(-4px);}
-.foto{width:84px;height:84px;border-radius:50%;object-fit:cover;margin:0 auto 8px;}
-
-/* senha area */
-.senha-area{margin-top:18px;text-align:center;}
-.senha-area input{
-  width:160px;padding:10px;border-radius:10px;border:2px solid var(--black);font-size:18px;text-align:center;
-}
-.senha-area button{
-  margin-left:10px;padding:10px 14px;border-radius:10px;border:0;background:var(--black);color:#fff;font-weight:700;cursor:pointer;
+  gap:15px;
+  z-index:1000;
 }
 
-/* Loja layout */
-.row{display:flex;gap:16px;align-items:flex-start;}
-.col{flex:1;}
-.produtos-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:14px;
+.logo{
+  height:34px;
 }
 
-.btnLogout{
-  background: transparent;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  margin-left: 8px;
-  transition: 0.2s;
+.header h1{
+  font-size:18px;
+  margin:0;
 }
 
-.btnLogout:hover{
-  transform: scale(1.2);
-}
-
-
-.produto{
-  background:var(--card);
-  border-radius:12px;padding:12px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.06);
-  display:flex;flex-direction:column;gap:8px;
-}
-.produto img{height:110px;object-fit:cover;border-radius:8px;}
-.produto .nome{font-weight:700;}
-.produto .preco{font-size:16px;color:var(--red);font-weight:700;}
-.produto .actions{margin-top:auto;display:flex;gap:8px;align-items:center;}
-.btn{
-  background:var(--red);color:#fff;padding:8px 10px;border-radius:10px;border:0;font-weight:700;cursor:pointer;
-}
-.btn-ghost{background:transparent;border:2px solid var(--red);color:var(--red);}
-
-/* Carrinho */
-.carrinho{
-  background: #fff;border-radius:12px;padding:12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);
-  max-height:600px;overflow:auto;
-}
-.item-cart{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid #f1f1f1;}
-.item-cart:last-child{border-bottom:0;}
-.total{font-size:18px;font-weight:800;margin-top:12px;color:var(--red);}
-
-/* Pagamento */
-.pagamento{margin-top:16px;text-align:center;}
-#qr-pix{max-width:220px;border-radius:8px;}
-
-/* Admin */
-.admin-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
-.input,textarea,select{padding:8px;border-radius:8px;border:1px solid #e6e6e6;width:100%}
-.table{width:100%;border-collapse:collapse;margin-top:12px;}
-.table th,.table td{padding:10px;border-bottom:1px solid #eee;text-align:left;}
-.small{font-size:13px;color:#666;}
-.filter-row{display:flex;gap:8px;align-items:center;}
-
-.cardFuncionario {
-  background: #fff;
-  border-radius: 16px;
-  padding: 15px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.3s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  position: relative;
-}
-
-.cardFuncionario:hover {
-  transform: translateY(-4px);
-}
-
-.cardFuncionario img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.cardFuncionario strong {
-  font-size: 15px;
-}
-
-.cardFuncionario span {
-  font-size: 12px;
-  color: #777;
-}
-
-/* AREA SENHA DENTRO DO CARD */
-.loginInterno {
-  margin-top: 10px;
-  display: none;
-  width: 100%;
-}
-
-.loginInterno input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  text-align: center;
-  margin-bottom: 6px;
-}
-
-.loginInterno button {
-  width: 100%;
-}
-
-.loginInterno {
-  transition: 0.3s;
-}
-
-.cardFuncionario.ativo {
-  border: 2px solid #d62828;
-}
-
-
-/* MENU ADMIN */
-
-.menu-admin{
-  width:220px;
-  height:100vh;
-  background:#111;
+.btnAdmin{
+  background:transparent;
+  border:none;
   color:white;
-  position:fixed;
-  left:0;
-  top:0;
-  padding:20px;
-  display:none;
-}
-
-.menu-admin ul{
-  list-style:none;
-  padding:0;
-}
-
-.menu-admin li{
-  padding:10px 0;
+  font-size:24px;
   cursor:pointer;
 }
-
-.adminAtivo .container{
-  margin-left:220px;
-}
-
-.adminAtivo .header{
-  margin-left:220px;
-}
-
-/* USER HEADER */
 
 .userBox{
   margin-left:auto;
   display:flex;
   align-items:center;
   gap:10px;
-  color:white;
   font-weight:bold;
 }
 
@@ -232,103 +67,358 @@ body{
   object-fit:cover;
 }
 
-/* LOADING LOGIN */
+.btnLogout{
+  background:transparent;
+  border:none;
+  cursor:pointer;
+}
 
-.loadingLogin{
+.btnLogout img{
+  width:22px;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+  max-width:1100px;
+  margin:90px auto 30px;
+  padding:0 20px;
+  transition:.3s;
+}
+
+.row{
+  display:flex;
+  gap:20px;
+}
+
+.col{
+  flex:1;
+}
+
+/* ================= LOGIN ================= */
+
+.funcionarios{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:16px;
+  margin-top:20px;
+}
+
+.cardFuncionario{
+  background:#fff;
+  border-radius:16px;
+  padding:15px;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+
+.cardFuncionario:hover{
+  transform:translateY(-4px);
+}
+
+.cardFuncionario img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:8px;
+}
+
+.cardFuncionario strong{
+  display:block;
+  font-size:14px;
+}
+
+.cardFuncionario span{
+  font-size:12px;
+  color:#777;
+}
+
+/* Área da senha */
+.loginInterno{
+  display:none;
+  margin-top:10px;
+}
+
+.loginInterno input{
+  width:100%;
+  padding:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  margin-bottom:8px;
+  text-align:center;
+}
+
+/* Campo buscar */
+.input{
+  width:100%;
+  max-width:400px;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  margin-top:10px;
+}
+
+/* ================= PRODUTOS ================= */
+
+.produtos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:14px;
+}
+
+.produto{
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.produto img{
+  height:110px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.produto .nome{
+  font-weight:700;
+}
+
+.produto .preco{
+  font-weight:700;
+  color:var(--red);
+}
+
+/* ================= CARRINHO ================= */
+
+.carrinho{
+  background:#fff;
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+
+.item-cart{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid #eee;
+}
+
+.total{
+  font-size:18px;
+  font-weight:800;
+  margin-top:10px;
+  color:var(--red);
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-250px;
+  width:250px;
+  height:100vh;
+  background:#111;
+  color:white;
+  padding:20px;
+  transition:.3s;
+  z-index:1500;
+}
+
+.sidebar.ativo{
+  left:0;
+}
+
+.sidebar h3{
+  margin-top:70px;
+}
+
+.sidebar ul{
+  list-style:none;
+  padding:0;
+  margin-top:20px;
+}
+
+.sidebar li{
+  padding:12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.sidebar li:hover{
+  background:#333;
+}
+
+/* empurra conteúdo quando aberto */
+.menuAberto .container{
+  margin-left:250px;
+}
+
+/* ================= SEÇÕES ADMIN ================= */
+
+.secaoAdmin{
+  display:none;
+  margin:100px 20px 20px 20px;
+}
+
+/* ================= BOTÕES ================= */
+
+.btn{
+  background:var(--red);
+  color:#fff;
+  padding:8px 12px;
+  border-radius:10px;
+  border:none;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.btn:hover{
+  background:var(--red-dark);
+}
+
+/* ================= MODAL LOGIN ================= */
+
+.loadingLogin,
+.erroSenha{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.85);
+  background:rgba(0,0,0,.7);
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index:999;
   opacity:0;
   pointer-events:none;
-  transition:0.3s;
+  transition:.3s;
+  z-index:2000;
 }
 
-.loadingLogin.ativo{
+.loadingLogin.ativo,
+.erroSenha.ativo{
   opacity:1;
   pointer-events:auto;
 }
 
-.loadingCard{
-  background:white;
-  padding:40px;
+.loadingCard,
+.erroCard{
+  background:#fff;
+  padding:30px;
   border-radius:20px;
   text-align:center;
   width:260px;
-  animation:scaleIn .3s ease;
 }
 
 .spinner{
   width:60px;
   height:60px;
   border:6px solid #eee;
-  border-top:6px solid #d62828;
+  border-top:6px solid var(--red);
   border-radius:50%;
   margin:0 auto 20px;
   animation:spin 1s linear infinite;
 }
 
 @keyframes spin{
-  to{ transform:rotate(360deg); }
+  to{transform:rotate(360deg);}
 }
 
-@keyframes scaleIn{
-  from{ transform:scale(.8); opacity:0 }
-  to{ transform:scale(1); opacity:1 }
-}
-
-
-/* ERRO SENHA */
-
-.erroSenha{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.8);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-  opacity:0;
-  pointer-events:none;
-  transition:.3s;
-}
-
-.erroSenha.ativo{
-  opacity:1;
-  pointer-events:auto;
-}
-
-.erroCard{
-  background:rgb(255, 255, 255);
-  padding:30px;
-  border-radius:18px;
-  text-align:center;
-  width:260px;
-  animation:scaleIn .3s ease;
-}
-
-#fecharErro {
-  background: #ff0000;
-  color: white;
+.menuBtn {
+  width: 100%;
+  padding: 12px;
   border: none;
-  padding: 10px 18px;
-  border-radius: 20px;
+  background: none;
+  color: white;
+  text-align: left;
   cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
 }
 
-.loginInterno{
-  display:none;
+.menuBtn:hover {
+  background: #333;
+}
+
+.menuBtn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menuBtn:hover {
+  background: #333;
+}
+
+
+/* ================= MENU ADMIN PROFISSIONAL ================= */
+
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-260px;
+  width:260px;
+  height:100vh;
+  background:linear-gradient(180deg,#111,#1a1a1a);
+  color:white;
+  padding:20px;
+  transition:0.3s ease;
+  z-index:1500;
+  box-shadow:4px 0 20px rgba(0,0,0,.4);
+}
+
+.sidebar.ativo{
+  left:0;
+}
+
+.sidebar h3{
+  margin-top:70px;
+  margin-bottom:25px;
+  font-size:16px;
+  letter-spacing:1px;
+  opacity:0.8;
+}
+
+/* BOTÕES DO MENU */
+
+.sidebar button{
   width:100%;
-  margin-top:10px;
-  animation:fadeIn .25s ease;
+  padding:14px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:12px;
+  background:#1f1f1f;
+  color:#fff;
+  text-align:left;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s ease;
+  font-size:14px;
 }
 
-@keyframes fadeIn{
-  from{ opacity:0; transform:translateY(-5px); }
-  to{ opacity:1; transform:translateY(0); }
+.sidebar button:hover{
+  background:var(--red);
+  transform:translateX(5px);
+}
+
+/* botão ativo (quando estiver na página atual) */
+
+.sidebar button.ativo{
+  background:var(--red);
+  box-shadow:0 0 15px rgba(214,40,40,.5);
+}
+
+/* empurrar conteúdo quando abrir */
+
+.sidebar.ativo ~ .container,
+.sidebar.ativo ~ .conteudoAdmin{
+  margin-left:260px;
+  transition:0.3s;
 }
