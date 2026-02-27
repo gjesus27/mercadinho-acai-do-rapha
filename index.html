@@ -9,6 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" href="image/logo/logoaçai.svg">
 </head>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(() => console.log("PWA ativa"))
+    .catch(err => console.log("Erro SW", err));
+}
+</script>
 <body>
   <header class="header">
     <img src="image/logo/logoaçai.svg" class="logo" alt="logo">
