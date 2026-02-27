@@ -206,7 +206,7 @@ if (paginaAtual === "loja.html") {
 
     const total = carrinho.reduce((t, i) => t + i.preco, 0);
 
-    await addDoc(collection(db, "vendas"), {
+    await addDoc(collection(db, "venda"), {
       funcionario: funcionario.nome,
       funcionarioId: funcionario.id,
       itens: carrinho,
@@ -259,7 +259,7 @@ if (paginaAtual === "dashboard.html") {
 
   const conteudo = document.querySelector(".conteudoAdmin");
 
-  onSnapshot(collection(db, "vendas"), (snap) => {
+  onSnapshot(collection(db, "venda"), (snap) => {
 
     let total = 0;
     let qtd = 0;
@@ -341,7 +341,7 @@ if (paginaAtual === "relatorios.html") {
 
   const conteudo = document.querySelector(".conteudoAdmin");
 
-  onSnapshot(collection(db, "vendas"), (snap) => {
+  onSnapshot(collection(db, "venda"), (snap) => {
 
     let html = "<h2>📈 Relatórios</h2>";
 
