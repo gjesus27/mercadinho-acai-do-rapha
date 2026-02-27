@@ -9,7 +9,11 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-const paginaAtual = window.location.pathname.split("/").pop();
+let paginaAtual = window.location.pathname.split("/").pop();
+
+if (paginaAtual === "" || paginaAtual === "/") {
+  paginaAtual = "index.html";
+}
 
 /* ================= FUNÇÕES GERAIS ================= */
 
