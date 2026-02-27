@@ -477,3 +477,11 @@ body{
     padding: 10px;
   }
 }
+
+.cardFuncionario {
+  transition: 0.2s;
+}
+
+.cardFuncionario:active {
+  transform: scale(0.96);
+}
