@@ -117,6 +117,10 @@ if (paginaAtual === "index.html") {
           } else {
             erroSenha.classList.add("ativo");
           }
+          if (!/^\d{4}$/.test(inputSenha.value)) {
+  alert("A senha deve ter 4 números");
+  return;
+}
         }, 500); // Simula carregamento
       });
 
