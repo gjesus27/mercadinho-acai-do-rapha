@@ -12,29 +12,43 @@
 
   <!-- HEADER GLOBAL -->
   <header class="header">
+  <div class="headerLeft">
     <img src="image/logo/logoaçai.svg" class="logo" alt="logo">
     <h1>Mercadinho do Rapha</h1>
-    <button id="btnAdminToggle" class="btnAdmin">☰</button>
-
-    <!-- BOX DO USUÁRIO LOGADO -->
-    <div class="userBox">
-      <span id="userNomeHeader">Nome</span>
-      <img id="userFotoHeader" src="image/user.png" alt="Foto">
-      <button id="logoutBtn" class="btnLogout">
-        <img src="image/logout-icon.svg" alt="Sair">
-      </button>
-    </div>
-  </header>
-
-  <!-- MENU LATERAL ADMIN -->
-  <div class="sidebar" id="menuAdmin">
-    <h3>Menu Admin</h3>
-    <button class="menuBtn ativo" data-pagina="dashboard.html">Dashboard</button>
-    <button class="menuBtn" data-pagina="produtos.html">Produtos</button>
-    <button class="menuBtn" data-pagina="funcionarios.html">Funcionários</button>
-    <button class="menuBtn" data-pagina="relatorios.html">Relatórios</button>
-    <button class="menuBtn" data-pagina="loja.html">Voltar à Loja</button>
   </div>
+
+  <div class="headerRight">
+    <span id="adminNome"></span>
+    <button id="logoutBtn" class="btn">Sair</button>
+    <button id="btnAdminToggle" class="btnAdmin">☰</button>
+  </div>
+</header>
+  <!-- MENU LATERAL ADMIN -->
+ <div class="sidebar" id="menuAdmin">
+  <h3>Menu Admin</h3>
+
+  <button onclick="location.href='dashboard.html'" class="menuBtn">
+    Dashboard
+  </button>
+
+  <button onclick="location.href='produtos.html'" class="menuBtn">
+    Produtos
+  </button>
+
+  <button onclick="location.href='funcionarios.html'" class="menuBtn">
+    Funcionários
+  </button>
+
+  <button onclick="location.href='relatorios.html'" class="menuBtn">
+    Relatórios
+  </button>
+
+  <hr>
+
+  <button onclick="location.href='loja.html'" class="menuBtn">
+    Voltar Loja
+  </button>
+</div>
 
   <!-- CONTEÚDO PRINCIPAL -->
   <div class="conteudoAdmin">

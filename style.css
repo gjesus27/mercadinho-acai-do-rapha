@@ -868,3 +868,63 @@ body {
     width: 100%;
   }
 }
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111827;
+  color: white;
+  padding: 15px 25px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 45px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 70px;
+  right: -250px;
+  width: 220px;
+  height: 100%;
+  background: #1f2937;
+  color: white;
+  padding: 20px;
+  transition: 0.3s;
+  z-index: 100;
+}
+
+.sidebar.ativo {
+  right: 0;
+}
+
+.menuBtn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+  color: white;
+}
+
+.menuBtn:hover {
+  background: #374151;
+}

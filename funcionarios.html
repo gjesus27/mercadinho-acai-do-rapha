@@ -10,27 +10,44 @@
 
   <!-- HEADER GLOBAL -->
   <header class="header">
+  <div class="headerLeft">
     <img src="image/logo/logoaçai.svg" class="logo" alt="logo">
     <h1>Mercadinho do Rapha</h1>
+  </div>
 
-    <div class="userBox">
-      <span id="adminNome"></span>
-      <button id="logoutBtn" class="btn">Sair</button>
-    </div>
-
+  <div class="headerRight">
+    <span id="adminNome"></span>
+    <button id="logoutBtn" class="btn">Sair</button>
     <button id="btnAdminToggle" class="btnAdmin">☰</button>
-  </header>
+  </div>
+</header>
 
   <!-- MENU LATERAL -->
-  <div class="sidebar" id="menuAdmin">
-    <h3>Menu Admin</h3>
-    <button onclick="location.href='dashboard.html'" class="menuBtn">Dashboard</button>
-    <button onclick="location.href='produtos.html'" class="menuBtn">Produtos</button>
-    <button class="menuBtn ativo">Funcionários</button>
-    <button onclick="location.href='relatorios.html'" class="menuBtn">Relatórios</button>
-    <hr>
-    <button onclick="location.href='loja.html'" class="menuBtn">Voltar Loja</button>
-  </div>
+ <div class="sidebar" id="menuAdmin">
+  <h3>Menu Admin</h3>
+
+  <button onclick="location.href='dashboard.html'" class="menuBtn">
+    Dashboard
+  </button>
+
+  <button onclick="location.href='produtos.html'" class="menuBtn">
+    Produtos
+  </button>
+
+  <button onclick="location.href='funcionarios.html'" class="menuBtn">
+    Funcionários
+  </button>
+
+  <button onclick="location.href='relatorios.html'" class="menuBtn">
+    Relatórios
+  </button>
+
+  <hr>
+
+  <button onclick="location.href='loja.html'" class="menuBtn">
+    Voltar Loja
+  </button>
+</div>
 
   <!-- CONTEÚDO -->
   <div class="conteudoAdmin">
