@@ -485,3 +485,386 @@ body{
 .cardFuncionario:active {
   transform: scale(0.96);
 }
+
+.topBar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.gridFuncionarios {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap:20px;
+}
+
+.cardAdminFuncionario {
+  background:#fff;
+  border-radius:16px;
+  padding:15px;
+  text-align:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.cardAdminFuncionario img {
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:10px;
+}
+
+.cardAdminFuncionario .nivelAdmin {
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:8px;
+  background:#eee;
+  display:inline-block;
+  margin-bottom:8px;
+}
+
+.modal {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal.ativo {
+  display:flex;
+}
+
+.modalContent {
+  background:#fff;
+  padding:25px;
+  border-radius:20px;
+  width:90%;
+  max-width:400px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.modalActions {
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
+
+.topBarFuncionarios{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:25px;
+  flex-wrap:wrap;
+}
+
+.topBarFuncionarios .input{
+  flex:1;
+  min-width:220px;
+  max-width:400px;
+}
+
+.topBarFuncionarios .btn{
+  width:auto !important;
+  padding:10px 18px;
+  white-space:nowrap;
+}
+
+/* GRID CENTRALIZADO */
+.gridFuncionarios{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(250px,1fr));
+  gap:25px;
+  width:100%;
+}
+
+/* CARD */
+.cardFuncionarioAdmin{
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  text-align:center;
+  transition:.2s;
+}
+
+.cardFuncionarioAdmin:hover{
+  transform:translateY(-6px);
+}
+
+.cardFuncionarioAdmin img{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:12px;
+}
+
+.conteudoAdmin{
+  width:100%;
+  max-width:1200px;
+  margin:auto;
+}
+
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+  color: #333;
+}
+
+/* ================= HEADER ================= */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #111827;
+  color: white;
+  padding: 15px 25px;
+}
+
+.logo {
+  width: 45px;
+}
+
+.userBox {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* ================= BOTÕES ================= */
+.btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.btnPrimario {
+  background: #2563eb;
+  color: white;
+}
+
+.btnPrimario:hover {
+  background: #1d4ed8;
+}
+
+.btnSecundario {
+  background: #e5e7eb;
+}
+
+.btnSecundario:hover {
+  background: #d1d5db;
+}
+
+.btnAdmin {
+  background: #374151;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+  position: fixed;
+  top: 70px;
+  right: -250px;
+  width: 220px;
+  height: 100%;
+  background: white;
+  box-shadow: -3px 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: 0.3s;
+  z-index: 100;
+}
+
+.sidebar.ativo {
+  right: 0;
+}
+
+.menuBtn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.menuBtn:hover {
+  background: #f3f4f6;
+}
+
+.menuBtn.ativo {
+  background: #e0e7ff;
+}
+
+/* ================= CONTEÚDO ================= */
+.conteudoAdmin {
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.tituloPagina {
+  margin-bottom: 20px;
+}
+
+/* ================= TOPO FUNCIONÁRIOS ================= */
+.headerFuncionarios {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  min-width: 220px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.input:focus {
+  border-color: #2563eb;
+}
+
+/* ================= GRID FUNCIONÁRIOS ================= */
+.gridFuncionarios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.cardFuncionarioAdmin {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.cardFuncionarioAdmin:hover {
+  transform: translateY(-5px);
+}
+
+.cardFuncionarioAdmin img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.cardFuncionarioAdmin h4 {
+  margin-bottom: 5px;
+}
+
+.cardFuncionarioAdmin span {
+  font-size: 14px;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.cardActions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ================= MODAL MODERNO ================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 200;
+}
+
+.modal.ativo {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modalContent {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  animation: subir 0.3s ease;
+}
+
+@keyframes subir {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modalContent h3 {
+  margin-bottom: 20px;
+}
+
+.modalContent input,
+.modalContent select {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* ================= RESPONSIVO ================= */
+@media (max-width: 768px) {
+  .conteudoAdmin {
+    padding: 20px;
+  }
+
+  .headerFuncionarios {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .input {
+    width: 100%;
+  }
+}

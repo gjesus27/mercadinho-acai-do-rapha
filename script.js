@@ -324,20 +324,94 @@ if (paginaAtual === "funcionarios.html") {
 
   verificarAdmin();
 
-  const conteudo = document.querySelector(".conteudoAdmin");
+  const lista = document.getElementById("listaFuncionariosAdmin");
+  const buscar = document.getElementById("buscarFuncionarioAdmin");
+  const btnNovo = document.getElementById("btnNovoFuncionario");
 
+  let funcionarios = [];
+
+  // 🔥 LISTAR FUNCIONÁRIOS
   onSnapshot(collection(db, "funcionarios"), (snap) => {
+    funcionarios = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    render(funcionarios);
+  });
 
-    let html = "<h2>👥 Funcionários</h2>";
+  function render(listaFiltrada) {
+    lista.innerHTML = "";
 
-    snap.forEach(docSnap => {
-      const f = docSnap.data();
-      html += `
-        <p>${f.nome} — ${f.cargo || "-"} — ${f.nivel || "user"}</p>
+    listaFiltrada.forEach(f => {
+      const div = document.createElement("div");
+      div.className = "cardFuncionarioAdmin";
+
+      div.innerHTML = `
+        <img src="${f.foto || 'image/user.png'}">
+        <h3>${f.nome}</h3>
+        <p>${f.cargo || "-"}</p>
+        <p><strong>${f.nivel || "user"}</strong></p>
+
+        <button class="btn btnEditar">Editar</button>
+        <button class="btn btnSecundario btnExcluir">Excluir</button>
       `;
+
+      // EDITAR
+      div.querySelector(".btnEditar").onclick = () => {
+        const novoNome = prompt("Nome:", f.nome);
+        if (!novoNome) return;
+
+        const novaSenha = prompt("Nova senha (4 números):", f.senha);
+        if (!novaSenha || novaSenha.length !== 4) {
+          alert("Senha deve ter 4 números.");
+          return;
+        }
+
+        updateDoc(doc(db, "funcionarios", f.id), {
+          nome: novoNome,
+          senha: novaSenha
+        });
+      };
+
+      // EXCLUIR
+      div.querySelector(".btnExcluir").onclick = () => {
+        if (confirm("Excluir funcionário?")) {
+          deleteDoc(doc(db, "funcionarios", f.id));
+        }
+      };
+
+      lista.appendChild(div);
+    });
+  }
+
+  // 🔎 FILTRO
+  buscar.addEventListener("input", (e) => {
+    const termo = e.target.value.toLowerCase();
+    const filtrado = funcionarios.filter(f =>
+      f.nome.toLowerCase().includes(termo)
+    );
+    render(filtrado);
+  });
+
+  // ➕ NOVO FUNCIONÁRIO
+  btnNovo.addEventListener("click", async () => {
+
+    const nome = prompt("Nome do funcionário:");
+    if (!nome) return;
+
+    const senha = prompt("Senha (4 números):");
+    if (!senha || senha.length !== 4) {
+      alert("Senha inválida.");
+      return;
+    }
+
+    const cargo = prompt("Cargo:");
+    const nivel = prompt("Nível (admin ou user):") || "user";
+
+    await addDoc(collection(db, "funcionarios"), {
+      nome,
+      senha,
+      cargo,
+      nivel
     });
 
-    conteudo.innerHTML = html;
   });
 }
 

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Funcionários - Mercadinho</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER GLOBAL -->
+  <header class="header">
+    <img src="image/logo/logoaçai.svg" class="logo" alt="logo">
+    <h1>Mercadinho do Rapha</h1>
+
+    <div class="userBox">
+      <span id="adminNome"></span>
+      <button id="logoutBtn" class="btn">Sair</button>
+    </div>
+
+    <button id="btnAdminToggle" class="btnAdmin">☰</button>
+  </header>
+
+  <!-- MENU LATERAL -->
+  <div class="sidebar" id="menuAdmin">
+    <h3>Menu Admin</h3>
+    <button onclick="location.href='dashboard.html'" class="menuBtn">Dashboard</button>
+    <button onclick="location.href='produtos.html'" class="menuBtn">Produtos</button>
+    <button class="menuBtn ativo">Funcionários</button>
+    <button onclick="location.href='relatorios.html'" class="menuBtn">Relatórios</button>
+    <hr>
+    <button onclick="location.href='loja.html'" class="menuBtn">Voltar Loja</button>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <div class="conteudoAdmin">
+
+    <!-- TÍTULO -->
+    <h2 class="tituloPagina">👥 Gestão de Funcionários</h2>
+
+    <!-- BARRA SUPERIOR -->
+    <div class="headerFuncionarios">
+
+      <input 
+        type="text" 
+        id="buscarFuncionarioAdmin" 
+        placeholder="Buscar funcionário..."
+        class="input"
+      >
+
+      <button id="btnNovoFuncionario" class="btn btnPrimario">
+        + Novo Funcionário
+      </button>
+
+    </div>
+
+    <!-- GRID -->
+    <div id="listaFuncionariosAdmin" class="gridFuncionarios"></div>
+
+  </div>
+
+  <!-- MODAL -->
+  <div id="modalFuncionario" class="modal">
+    <div class="modalContent">
+
+      <h3 id="modalTitulo">Novo Funcionário</h3>
+
+      <input type="text" id="funcNome" placeholder="Nome" class="input">
+      <input type="text" id="funcCargo" placeholder="Cargo" class="input">
+
+      <select id="funcNivel" class="input">
+        <option value="user">Usuário</option>
+        <option value="admin">Admin</option>
+      </select>
+
+      <input 
+        type="password" 
+        id="funcSenha" 
+        placeholder="Senha (4 números)" 
+        maxlength="4"
+        class="input"
+      >
+
+      <input 
+        type="text" 
+        id="funcFoto" 
+        placeholder="Caminho da foto (image/funcionarios/nome.jpg)"
+        class="input"
+      >
+
+      <div class="modalActions">
+        <button id="salvarFuncionario" class="btn btnPrimario">
+          Salvar
+        </button>
+        <button id="cancelarFuncionario" class="btn btnSecundario">
+          Cancelar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
